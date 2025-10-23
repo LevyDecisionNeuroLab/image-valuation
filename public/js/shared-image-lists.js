@@ -47,7 +47,7 @@ window.ImageLists = {
         'Strawberry,+cherry,+cream,+chocolate,+and+almond+butter+wafers.jpg', 'Sweet+glazed+colorful+dumplings.jpg', 'Sweet+salty+energy+bites+1.jpg',
         'Tim+tams+2.jpg', 'churro.jpg'
     ],
-    'new-images': [
+    'new-images-final-cropped': [
         '26.+arepas++MD+NEW.jpg',
         '27.+Bacon,+Egg,+and+Cheese+Eggo+Waffle+Sandwich+NEW.jpg',
         '28.+Blackberry+Lemon+Cheesecake+Bars+MD+NEW.jpg',

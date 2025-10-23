@@ -55,7 +55,8 @@ Object.assign(ImageValuationExperiment.prototype, {
             
             // Get image size and create image element
             const imageSize = this.experimentConfig.imageSizes[image.size];
-            const imagePath = `images/old-images/${encodeURIComponent(image.filename)}`;
+            const imageFolder = this.experimentConfig.phase1.imageSource;
+            const imagePath = `images/${imageFolder}/${encodeURIComponent(image.filename)}`;
             const imageStyle = `max-width: ${imageSize}; max-height: ${imageSize}; width: auto; height: auto; display: block; margin: 0 auto; border-radius: 0; box-shadow: none; background: none;`;
             const imageElement = this.getImageElement(imagePath, `Food image ${image.id}`, imageStyle);
             
@@ -265,7 +266,7 @@ Object.assign(ImageValuationExperiment.prototype, {
             console.log('Resolved imageSize:', imageSize);
             console.log('Should be 520px for all Phase 2 images');
             
-            const imageFolder = image.isOld ? 'old-images' : this.experimentConfig.phase2.newImageSource;
+            const imageFolder = image.isOld ? this.experimentConfig.phase1.imageSource : this.experimentConfig.phase2.newImageSource;
             console.log('Image folder:', imageFolder);
             console.log('Image isOld:', image.isOld);
             
