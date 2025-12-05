@@ -79,7 +79,7 @@ class ImageValuationExperiment {
         
         // Phase 1: Random selection from old-images with size distribution
         this.phase1Images = [];
-        const oldImageFiles = this.getImageFilesFromFolder(phase1Config.imageSource);
+        const oldImageFiles = this.getImageFilesFromFolder('old-images');
         const shuffledOldImages = this.shuffleArray([...oldImageFiles]);
         
         // Create large images
@@ -122,7 +122,7 @@ class ImageValuationExperiment {
         }
         
         // Add new images from new-images folder (all medium size)
-        const newImageFiles = this.getImageFilesFromFolder(phase2Config.newImageSource);
+        const newImageFiles = this.getImageFilesFromFolder('new-images');
         const shuffledNewImages = this.shuffleArray([...newImageFiles]);
         
         // Calculate the next available ID after phase1 images
@@ -189,15 +189,12 @@ class ImageValuationExperiment {
             
             // Add Phase 1 images
             this.phase1Images.forEach(img => {
-                const folder = this.experimentConfig.phase1.imageSource;
-                imagesToPreload.add(`images/${folder}/${encodeURIComponent(img.filename)}`);
+                imagesToPreload.add(`images/old-images/${encodeURIComponent(img.filename)}`);
             });
             
             // Add Phase 2 images
             this.phase2Images.forEach(img => {
-                const folder = img.isOld 
-                    ? this.experimentConfig.phase1.imageSource 
-                    : this.experimentConfig.phase2.newImageSource;
+                const folder = img.isOld ? 'old-images' : 'new-images';
                 imagesToPreload.add(`images/${folder}/${encodeURIComponent(img.filename)}`);
             });
             
@@ -223,13 +220,10 @@ class ImageValuationExperiment {
                         resolve(img);
                     };
                     
-                    img.onerror = (error) => {
-                        console.error(`❌ FAILED to load image: ${imagePath}`);
-                        console.error('Error details:', error);
-                        console.error('Image src:', img.src);
-                        console.error('Full URL:', window.location.origin + '/' + imagePath);
+                    img.onerror = () => {
+                        console.warn(`Failed to load image: ${imagePath}`);
                         loadedCount++;
-
+                        
                         // Still update progress even for failed images
                         const progress = Math.round((loadedCount / totalImages) * 100);
                         this.updateLoadingProgress(progress, loadedCount, totalImages);
